@@ -1,7 +1,6 @@
 import { ProductItem } from "../ProductItem";
 import { SearchResultsProps } from "./types";
 
-
 export function SearchResults({ results }: SearchResultsProps) {
   return (
     <div>
