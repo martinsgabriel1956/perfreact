@@ -1,10 +1,14 @@
 import type { NextPage } from 'next'
 import { FormEvent, useState } from 'react'
 import { SearchResults } from '../components/SearchResults';
+import { Results } from './homeTypes';
 
 const Home: NextPage = () => {
   const [search, setSearch] = useState('');
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Results>({
+    totalPrice: 0,
+    data: [],
+  });
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     setSearch(event.target.value);
@@ -21,7 +25,23 @@ const Home: NextPage = () => {
 
     const data = await response.json();
 
-    setResults(data);
+    const formatter = new Intl.NumberFormat('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    })
+
+    const products = data.map(product => ({
+      ...product,
+      priceFormatted: formatter.format(product.price),
+    }))
+
+    const totalPrice = data.reduce((total, product) => {
+      return total + product.price;
+    }, 0);
+
+    console.log(totalPrice)
+
+    setResults({ totalPrice, data: products });
   }
 
   async function addToWishlist(id: number) {
@@ -38,7 +58,8 @@ const Home: NextPage = () => {
       </form>
 
       <SearchResults 
-        results={results} 
+        results={results!.data} 
+        totalPrice={results!.totalPrice}
         onAddToWishlist={addToWishlist}
       />
     </>

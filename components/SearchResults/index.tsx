@@ -2,16 +2,10 @@ import { useMemo } from "react";
 import { ProductItem } from "../ProductItem";
 import { SearchResultsProps } from "./types";
 
-export function SearchResults({ results, onAddToWishlist }: SearchResultsProps) {
-  const totalValue = useMemo(() => {
-    return results.reduce((acc, product) => {
-      return acc + product.price;
-    }, 0);
-  }, [results]);
-
+export function SearchResults({ totalPrice, results, onAddToWishlist }: SearchResultsProps) {
   return (
     <div>
-      <h2>{totalValue}</h2>
+      <h2>{totalPrice}</h2>
 
       {results.map(product => (
         <ProductItem 
