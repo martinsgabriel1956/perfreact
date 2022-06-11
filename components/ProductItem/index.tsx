@@ -2,10 +2,11 @@ import { memo } from "react";
 
 import { ProductItemProps } from "./types";
 
-function ProductItemComponent({ product }: ProductItemProps) {
+function ProductItemComponent({ product, onAddToWishlist }: ProductItemProps) {
   return (
     <div>
       {product.title} - <strong>{product.price}</strong>
+      <button onClick={() => onAddToWishlist(product.id)}>Add to wishlist</button>
     </div>
   )
 }

@@ -4,4 +4,5 @@ export interface ProductItemProps {
     price: number;
     title: string;
   };
+  onAddToWishlist: (id: number) => void;
 }
